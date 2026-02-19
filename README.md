@@ -38,8 +38,18 @@ rm -rf node_modules package-lock.json .next
 # 2. Force clean npm cache to remove corrupted binaries
 npm cache clean --force
 
-# 3. Reinstall all dependencies from scratch
+# 3. Checking the current architecture
+node -p "process.arch"
+
+# 4. Installing specific binary codes for Apple Silicon
+npm install @next/swc-darwin-arm64
+
+# 5. Reinstall all dependencies from scratch
 npm install
+
+# 6. Running the development server
+npm run dev
+```
 
 ## Learn More
 
