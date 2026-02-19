@@ -14,6 +14,58 @@ pnpm dev
 bun dev
 ```
 
+## 🐳 Running PostgreSQL with Docker
+
+To run the database locally without installing PostgreSQL on your macOS, use Docker.
+
+### 1. Create a `docker-compose.yml`
+Create a file named `docker-compose.yml` in your root directory:
+
+```yaml
+services:
+  db:
+    image: postgres:15
+    container_name: nextjs_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+Start the Database
+Run this command to start the container in the background:
+```bash
+docker-compose up -d
+```
+## Setting up Drizzle ORM
+### Environment Variables
+Create a .env file and add your connection string:
+```bash
+DATABASE_URL=postgresql://myuser:mypassword@localhost:5432/mydatabase
+```
+## Drizzle Commands
+### Add these scripts to your package.json to manage your database:
+```bash
+"scripts": {
+  "db:generate": "drizzle-kit generate",
+  "db:migrate": "drizzle-kit migrate",
+  "db:studio": "drizzle-kit studio"
+}
+```
+npm run db:generate: Creates SQL migration files based on your schema.
+
+npm run db:migrate: Applies those migrations to your Docker database.
+
+npm run db:studio: Opens a GUI in your browser to view your data.
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
