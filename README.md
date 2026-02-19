@@ -20,6 +20,27 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+# 🛠 Troubleshooting: Running on Apple Silicon (M1/M2/M3)
+
+If you encounter an error like `segment '__TEXT' load command content extends beyond end of file` or `turbo.createProject is not supported by the wasm bindings`, it means the SWC binary is corrupted or incompatible with your architecture.
+
+Follow these steps to fix it:
+
+---
+
+### 1. Total Cleanup (Recommended)
+Sometimes a simple `npm install` isn't enough because corrupted binaries stay in the cache. Run the following commands in your terminal:
+
+```bash
+# 1. Remove node_modules, lock files, and build cache
+rm -rf node_modules package-lock.json .next
+
+# 2. Force clean npm cache to remove corrupted binaries
+npm cache clean --force
+
+# 3. Reinstall all dependencies from scratch
+npm install
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
